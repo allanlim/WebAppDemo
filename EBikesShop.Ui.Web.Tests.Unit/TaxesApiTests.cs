@@ -1,7 +1,5 @@
-﻿using EBikesShop.Shared;
+using EBikesShop.Shared;
 using EBikesShop.Shared.Taxes;
-using EBikesShop.Ui.Web.Apis;
-using Flurl.Http.Testing;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Linq;
@@ -11,58 +9,36 @@ using System.Threading.Tasks;
 namespace EBikesShop.Ui.Web.Tests.Unit
 {
     [TestFixture]
-    public class TaxesApiTests
+    public class TestClass
     {
-        private HttpTest _httpTest;
-        private AppSettings _settings;
-
-        [SetUp]
-        public void InitializeHttp()
+        [Test]
+        public void TestMethodPass()
         {
-            _httpTest = new HttpTest();
-
-           _settings = new AppSettings();
-        }
-
-        [TearDown]
-        public void DisposeHttp()
-        {
-            _httpTest.Dispose();
+            // TODO: Add test code here
+            Assert.Pass("This test has passed!");
         }
 
         [Test]
-        public async Task GetStateTaxesAsync_calls_the_server_api()
+        public void TestMethodIgnore()
         {
-            var sut = BuildSut();
-            _httpTest.RespondWith("[]");
-                
-            await sut.GetStateTaxesAsync();
-
-            _httpTest.ShouldHaveCalled($"{_settings.ApiBaseUrl}/taxes")
-                .WithVerb(HttpMethod.Get)
-                .WithHeader("Accept", "application/json");
+            // TODO: Add test code here
+            Assert.Ignore("This test has been ignored!");
         }
 
         [Test]
-        public async Task GetStateTaxesAsync_deserializes_json()
+        public void TestMethodInconclusive()
         {
-            var sut = BuildSut();
-            var expected = new StateTaxDto[] 
-            {
-                new StateTaxDto { StateCode = "UT", TaxRate = 6.85m },
-                new StateTaxDto { StateCode = "CA", TaxRate = 8.00m },
-            };
-            _httpTest.RespondWith(JsonConvert.SerializeObject(expected));
-
-            var received = await sut.GetStateTaxesAsync();
-
-            Assert.That(received, Has.All.Matches<StateTaxDto>(r =>
-                expected.Any(e => r.TaxRate == e.TaxRate && r.StateCode == e.StateCode)));
+            // TODO: Add test code here
+            Assert.Inconclusive("This test was inconclusive!");
         }
-
-        private TaxesApi BuildSut()
+    }
+    public class TestClass2
+    {
+        [Test]
+        public void TestMethodPass()
         {
-            return new TaxesApi(_settings);
+            // TODO: Add test code here
+            Assert.Pass("This test has passed!");
         }
     }
 }
